@@ -118,7 +118,7 @@ ShapeGaitData <- function(dat) {
 #' walkingJsonFile <- synGet(sample_walking_File)@filePath
 #' getWalkFeatures(walkingJsonFile)
 
-getWalkFeatures <- function(walking_json_file, TSLICE = 210) {
+getWalkFeatures <- function(walking_json_file, TSLICE = 100) {
   if (is.na(walking_json_file) == T) {
     null_result = c(rep(NA, 113), error = "no json data file")
     names(null_result) = c("meanX", "sdX", "modeX", "skewX", "kurX", "q1X",
@@ -166,7 +166,7 @@ getWalkFeatures <- function(walking_json_file, TSLICE = 210) {
     return(null_result)
   }
   
-  dat <- dat[1:min(TSLICE, nrow(dat)/4),]
+  dat <- dat[-(1:TSLICE),]
   dat <- ShapeGaitData(dat)
   x <- dat$x
   y <- dat$y
