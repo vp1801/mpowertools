@@ -145,7 +145,7 @@ getWalkFeatures <- function(walking_json_file, TSLICE = 100) {
   dat <- jsonlite::fromJSON(walking_json_file)
 
   timeSec = dat$timestamp - dat$timestamp[1]
-  dat <- dat[timesec > 2 & timeSec<15,]
+  dat <- dat[timeSec > 2 & timeSec<15,]
   dat <- ShapeGaitData(dat)
   x <- dat$x
   y <- dat$y
