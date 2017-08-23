@@ -143,30 +143,9 @@ getWalkFeatures <- function(walking_json_file, TSLICE = 100) {
   }
   
   dat <- jsonlite::fromJSON(walking_json_file)
-  if(nrow(dat) <= TSLICE){
-    null_result = c(rep(NA, 113), error = "NUMBER OF OBSERVATIONS LESS THAN TIME SLICE")
-    names(null_result) = c("meanX", "sdX", "modeX", "skewX", "kurX", "q1X",
-                           "medianX", "q3X", "iqrX", "rangeX", "acfX", "zcrX", 
-                           "dfaX", "cvX", "tkeoX", "F0X", "P0X","F0FX", "P0FX", 
-                           "medianF0FX", "sdF0FX", "tlagX", "meanY", "sdY", "modeY",
-                           "skewY", "kurY", "q1Y", "medianY", "q3Y", "iqrY", 
-                           "rangeY", "acfY", "zcrY", "dfaY", "cvY", "tkeoY",
-                           "F0Y", "P0Y", "F0FY", "P0FY", "medianF0FY", "sdF0FY", 
-                           "tlagY", "meanZ", "sdZ", "modeZ", "skewZ", "kurZ", "q1Z",
-                           "medianZ", "q3Z", "iqrZ", "rangeZ", "acfZ", "zcrZ", "dfaZ", 
-                           "cvZ", "tkeoZ", "F0Z", "P0Z", "F0FZ", "P0FZ", "medianF0FZ", 
-                           "sdF0FZ", "tlagZ", "meanAA", "sdAA", "modeAA", "skewAA", "kurAA",
-                           "q1AA", "medianAA", "q3AA", "iqrAA", "rangeAA", "acfAA", "zcrAA",
-                           "dfaAA", "cvAA", "tkeoAA", "F0AA", "P0AA", "F0FAA", "P0FAA", 
-                           "medianF0FAA", "sdF0FAA", "tlagAA","meanAJ", "sdAJ", "modeAJ", 
-                           "skewAJ", "kurAJ", "q1AJ", "medianAJ", "q3AJ", "iqrAJ", "rangeAJ", 
-                           "acfAJ", "zcrAJ", "dfaAJ", "cvAJ", "tkeoAJ", "F0AJ", "P0AJ",
-                           "F0FAJ", "P0FAJ", "medianF0FAJ", "sdF0FAJ", "tlagAJ",
-                           "corXY", "corXZ", "corYZ", "error")
-    return(null_result)
-  }
-  
-  dat <- dat[-(1:TSLICE),]
+
+  timeSec = dat$timestamp - dat$timestamp[1]
+  dat <- dat[timesec > 2 & timeSec<15,]
   dat <- ShapeGaitData(dat)
   x <- dat$x
   y <- dat$y
