@@ -202,6 +202,10 @@ getWalkFeatures <- function(walking_json_file) {
   }
 
   dat <- jsonlite::fromJSON(walking_json_file)
+  
+  timeSec = dat$timestamp - dat$timestamp[1]
+  dat <- dat[timeSec > 2 & timeSec<15,]
+  
   userAccel_rotated <- get_quaternary_rotated_userAccel(dat)
   dat <- cbind(dat, userAccel_rotated)
   dat <- ShapeGaitData(dat)
