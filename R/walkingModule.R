@@ -202,6 +202,7 @@ getWalkFeatures <- function(walking_json_file) {
   }
 
   dat <- jsonlite::fromJSON(walking_json_file)
+  dat = dat[order(dat$timestamp), ]
   
   timeSec = dat$timestamp - dat$timestamp[1]
   dat <- dat[timeSec > 2 & timeSec<15,]
